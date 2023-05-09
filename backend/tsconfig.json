@@ -1,30 +1,21 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": [
-      "esnext"
-    ],
-    "target": "es2015",
-    "outDir": "./lib",
+    "declaration": true,
     "removeComments": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "preserveConstEnums": true,
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*-spec.ts"
-  ]
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }
