@@ -3,13 +3,21 @@ import useAlertsQuery from "../hooks/useAlertsQuery";
 const Alerts = () => {
   const alerts = useAlertsQuery();
   const tableStyle = {
-    maxHeight: "300px",
+    maxHeight: "120px",
     overflowY: "auto",
     display: "block",
   };
   return (
     <div>
       <p>Alerts</p>
+      <select>
+        <option value="1">Last 6 hours</option>
+        <option value="2">Last 24 hours</option>
+        <option value="3">Last week</option>
+        <option value="4">Last month</option>
+        <option value="5">Last 3 months</option>
+        <option value="6">All time</option>
+      </select>
       <table style={tableStyle}>
         <thead>
           <tr>
