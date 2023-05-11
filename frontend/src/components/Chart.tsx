@@ -7,19 +7,30 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { getCountByDay } from "./helper";
 
-const CustomLineChart = (data: any, eventType: any) => {
-  const dayCount = getCountByDay(data.data);
-  console.log("dayCount", dayCount);
-  if (dayCount.length === 0) {
+const Chart = ({
+  data,
+  aggregator,
+  timespan,
+}: {
+  data: Array<any>;
+  aggregator: string;
+  timespan: string;
+}) => {
+  const chartData = Object.entries(data).map(([timestamp, value]) => ({
+    timestamp,
+    [`${aggregator}`]: value,
+  }));
+
+
+  if (chartData.length === 0) {
     return <div>No data</div>;
   }
   return (
     <LineChart
       width={600}
       height={300}
-      data={dayCount}
+      data={chartData}
       margin={{
         top: 5,
         right: 30,
@@ -34,7 +45,7 @@ const CustomLineChart = (data: any, eventType: any) => {
       <Legend />
       <Line
         type="monotone"
-        dataKey="count"
+        dataKey={aggregator}
         stroke="#8884d8"
         activeDot={{ r: 8 }}
       />
@@ -42,4 +53,4 @@ const CustomLineChart = (data: any, eventType: any) => {
   );
 };
 
-export default CustomLineChart;
+export default Chart;
