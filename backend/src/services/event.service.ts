@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient, events } from '@prisma/client';
+import { aggregatorMap, categoricalMood } from 'src/utils/helper';
 
 @Injectable()
 export class EventService {
@@ -38,12 +39,10 @@ export class EventService {
   async getAggregatedDailyEventsByType(
     patient_id: string,
     event_type: string,
-    aggregator: string,
     filters: Record<string, string> = {},
     startDate: string,
     endDate: string,
   ): Promise<any> {
-    const isCount = aggregator === 'count' ? true : false;
     const formattedFilters = this.formatFilters(filters);
 
     const events = await this.prisma.events.findMany({
@@ -56,11 +55,7 @@ export class EventService {
       },
     });
 
-    const aggregatedDailyEvents = this.aggregateEventsByDay(
-      events,
-      aggregator,
-      isCount,
-    );
+    const aggregatedDailyEvents = this.aggregateEventsByDay(events, event_type);
 
     return aggregatedDailyEvents;
   }
@@ -81,22 +76,35 @@ export class EventService {
     return formattedFilters;
   }
 
-  private aggregateEventsByDay(
-    events: events[],
-    aggregator: string,
-    isCount: boolean,
-  ) {
-    return events.reduce((acc, event) => {
+  private aggregateEventsByDay(events: events[], event_type: string) {
+    const aggregatedEvents = events.reduce((acc, event) => {
       const date = new Date(event.timestamp).toISOString().split('T')[0];
-      if (isCount) {
-        acc[date] = acc[date] ? acc[date] + 1 : 1;
-      } else {
-        const key = event.payload[aggregator];
-        if (key) {
-          acc[date] = acc[date] ? acc[date] + key : key;
-        }
+      switch (aggregatorMap[event_type]) {
+        case 'count':
+          acc[date] = acc[date] ? acc[date] + 1 : 1;
+          break;
+        case 'categorical_mood':
+          const categoricalMoodKey = event.payload['mood'];
+          if (categoricalMoodKey) {
+            acc[date] = acc[date]
+              ? acc[date] + categoricalMood[categoricalMoodKey]
+              : categoricalMood[categoricalMoodKey];
+          }
+          break;
+        case 'consumed_volume_ml':
+        default:
+          const key = event.payload[aggregatorMap[event_type]];
+          if (key) {
+            acc[date] = acc[date] ? acc[date] + key : key;
+          }
+          break;
       }
       return acc;
     }, {});
+
+    return {
+      aggregationType: aggregatorMap[event_type],
+      aggregatedEvents,
+    };
   }
 }

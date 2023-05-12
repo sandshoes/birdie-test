@@ -2,30 +2,20 @@ import { useState } from "react";
 import Chart from "./Chart";
 import useAggregatedEventTypeQuery from "../hooks/useAggregatedEventTypeQuery";
 
-const aggregatorMap: any = {
-  ["fluid_intake_observation"]: "consumed_volume_ml",
-  ["catheter_observation"]: "consumed_volume_ml",
-  ["check_in"]: "count",
-  ["regular_medication_taken"]: "count",
-  ["mood_observation"]: "categorical_mood",
-};
-
 const GraphicInformation = () => {
   const [currentType, setCurrentType] = useState("fluid_intake_observation");
-  const [currentDate, setCurrentDate] = useState("day");
+  const [currentTimespan, setCurrentTimespan] = useState("day");
   const eventTypeQuery = useAggregatedEventTypeQuery(
     currentType,
-    aggregatorMap[currentType],
-    currentDate
+    currentTimespan
   );
-
 
   const handleChartChange = (event: any) => {
     setCurrentType(event.target.value);
   };
 
   const handleDateChange = (event: any) => {
-    setCurrentDate(event.target.value);
+    setCurrentTimespan(event.target.value);
   };
 
   return (
@@ -51,9 +41,8 @@ const GraphicInformation = () => {
           <h1>Graphic Information</h1>
           {eventTypeQuery.isSuccess && (
             <Chart
-              data={eventTypeQuery.data}
-              aggregator={aggregatorMap[currentType]}
-              timespan="6 months"
+              data={eventTypeQuery.data.aggregatedEvents}
+              aggregator={eventTypeQuery.data.aggregationType}
             />
           )}
         </div>

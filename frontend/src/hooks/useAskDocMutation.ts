@@ -13,7 +13,6 @@ const useAskDocMutation = () => {
         query: inputValue,
       },
     });
-    console.log('ask doc truth', askDoc)
     return askDoc.data;
   });
 };

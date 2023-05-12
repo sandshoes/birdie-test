@@ -11,17 +11,14 @@ import {
 const Chart = ({
   data,
   aggregator,
-  timespan,
 }: {
   data: Array<any>;
   aggregator: string;
-  timespan: string;
 }) => {
   const chartData = Object.entries(data).map(([timestamp, value]) => ({
     timestamp,
     [`${aggregator}`]: value,
   }));
-
 
   if (chartData.length === 0) {
     return <div>No data</div>;
