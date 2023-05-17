@@ -27,6 +27,7 @@
     "@supabase/supabase-js": "^2.22.0",
     "chromadb": "^1.4.2",
     "d3-dsv": "^2.0.0",
+    "dotenv": "^16.0.3",
     "hnswlib-node": "^1.4.2",
     "langchain": "^0.0.75",
     "pg": "^8.11.0",

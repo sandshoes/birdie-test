@@ -81,7 +81,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchCareRecipientInfo = async (careRecipientId: string) => {
     const response = await fetch(
-      `http://localhost:3000/recipient/${careRecipientId}`
+      `http://localhost:3000/recipient/${careRecipientId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+      }
     );
     const careRecipientData = await response.json();
     setCareRecipientData(careRecipientData);
