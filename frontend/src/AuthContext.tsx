@@ -60,13 +60,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (careRecipientId) {
-      console.log("fetching care recipient info");
       fetchCareRecipientInfo(careRecipientId);
     }
   }, [careRecipientId]);
 
   const fetchProfile = async (userId: string) => {
-    console.log("fetching for ", userId);
     const { data, error } = await supabase
       .from("profiles")
       .select("username, care_recipient_id")
@@ -98,17 +96,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (error) {
       console.log(error.message);
     } else {
-      const res = await supabase
+      await supabase
         .from("profiles")
         .select("username")
         .eq("id", data.user!.id)
         .single();
-
-      console.log("true res", res);
     }
-    // if (error) {
-    //   return { user: null, error };
-    // }
 
     setUser(data.user);
     setSession(data.session);

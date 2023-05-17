@@ -7,7 +7,6 @@ import { SqlDatabase } from 'langchain/sql_db';
 @Injectable()
 export class LLMService {
   async getLLMQuery(query: string): Promise<any> {
-    console.log('this facts', query);
     const datasource = new DataSource({
       type: 'postgres',
       host: 'localhost',

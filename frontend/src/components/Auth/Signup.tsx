@@ -17,7 +17,7 @@ function SignUp() {
     if (error) {
       console.log(error.message);
     } else {
-      const res = await supabase.from("profiles").insert([
+      await supabase.from("profiles").insert([
         {
           user_id: data.user!.id,
           username: username,

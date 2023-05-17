@@ -1,16 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { LLMService } from 'src/services/llm.service';
+import { AuthRequest } from 'src/types';
 
 @Controller('llm')
 export class LLMController {
   constructor(private readonly llmService: LLMService) {}
 
   @Post('/ask-doc')
-  async getLLMQuery(@Body() body: any) {
+  async getLLMQuery(@Req() req: AuthRequest, @Body() body: any) {
     const query: string = body.body?.query || body.query;
     return this.llmService.getLLMQuery(
-      'Regarding care_recipient_id df50cac5-293c-490d-a06c-ee26796f850d,' +
-        query,
+      `Regarding care_recipient_id ${req.careRecipientId},` + query,
     );
   }
 }

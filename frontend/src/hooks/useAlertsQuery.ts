@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { processUrlFilters } from "../utils/helper";
+import { useAuth } from "../AuthContext";
 
 const useAlertsQuery = (filters: any) => {
   const BASE_URL = "http://localhost:3000/";
   const url = "event/alert_raised";
+  const auth = useAuth();
+  const accessToken = auth.session?.access_token;
   const processedFilters = processUrlFilters(filters);
   return useQuery(["alerts", processedFilters], async () => {
     const raisedAlerts = await axios.get(
@@ -13,7 +16,7 @@ const useAlertsQuery = (filters: any) => {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          Authorization: "Bearer 123456789",
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -23,7 +26,7 @@ const useAlertsQuery = (filters: any) => {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          Authorization: "Bearer 123456789",
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );

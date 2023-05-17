@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { useAuth } from "../AuthContext";
 
 const useAggregatedEventTypeQuery = (eventType: string, eventDates: any) => {
+  const auth = useAuth();
+  const accessToken = auth.session?.access_token;
   return useQuery(
     ["event_type", eventType, eventDates],
     async () => {
@@ -11,7 +14,7 @@ const useAggregatedEventTypeQuery = (eventType: string, eventDates: any) => {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
-            Authorization: "Bearer 123456789",
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );

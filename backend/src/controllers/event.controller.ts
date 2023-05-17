@@ -1,25 +1,29 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { EventService } from '../services/event.service';
+import { AuthRequest } from 'src/types';
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Get()
-  async getEvents(@Query('start_date') startDate, @Query('end_date') endDate) {
-    return this.eventService.getEvents(
-      'df50cac5-293c-490d-a06c-ee26796f850d',
-      startDate,
-      endDate,
-    );
+  async getEvents(
+    @Req() req: AuthRequest,
+    @Query('start_date') startDate,
+    @Query('end_date') endDate,
+  ) {
+    return this.eventService.getEvents(req.careRecipientId, startDate, endDate);
   }
 
   @Get('/:event_type')
-  async getEventsByType(@Param('event_type') eventType, @Query() query) {
+  async getEventsByType(
+    @Req() req: AuthRequest,
+    @Param('event_type') eventType,
+    @Query() query,
+  ) {
     const { start_date: startDate, end_date: endDate, ...filters } = query;
-
     return this.eventService.getEventsByType(
-      'df50cac5-293c-490d-a06c-ee26796f850d',
+      req.careRecipientId,
       eventType,
       filters,
       startDate,
@@ -29,13 +33,14 @@ export class EventController {
 
   @Get('/aggregated/:event_type')
   async getAggregatedEventsByType(
+    @Req() req: AuthRequest,
     @Param('event_type') eventType,
     @Query() query,
   ) {
     const { start_date: startDate, end_date: endDate, ...filters } = query;
 
     return this.eventService.getAggregatedDailyEventsByType(
-      'df50cac5-293c-490d-a06c-ee26796f850d',
+      req.careRecipientId,
       eventType,
       filters,
       startDate,
