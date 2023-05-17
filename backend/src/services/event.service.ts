@@ -6,10 +6,24 @@ import { aggregatorMap, categoricalMood } from 'src/utils/helper';
 export class EventService {
   private readonly prisma = new PrismaClient();
 
-  async getEvents(patient_id: string): Promise<events[]> {
+  async getEvents(
+    patient_id: string,
+    startDate: string,
+    endDate: string,
+  ): Promise<events[]> {
     const events = await this.prisma.events.findMany({
       where: {
         care_recipient_id: patient_id,
+        timestamp: {
+          ...(startDate && { gte: new Date(startDate) }),
+          ...(endDate && { lte: new Date(endDate) }),
+        },
+      },
+      include: {
+        caregivers: true,
+      },
+      orderBy: {
+        timestamp: 'desc',
       },
     });
     return events;
@@ -28,9 +42,17 @@ export class EventService {
       where: {
         care_recipient_id: patient_id,
         event_type: event_type,
-        ...(startDate && { timestamp: { gte: new Date(startDate) } }),
-        ...(endDate && { timestamp: { lte: new Date(endDate) } }),
+        timestamp: {
+          ...(startDate && { gte: new Date(startDate) }),
+          ...(endDate && { lte: new Date(endDate) }),
+        },
         AND: formattedFilters,
+      },
+      include: {
+        caregivers: true,
+      },
+      orderBy: {
+        timestamp: 'desc',
       },
     });
     return events;
@@ -49,8 +71,10 @@ export class EventService {
       where: {
         care_recipient_id: patient_id,
         event_type: event_type,
-        ...(startDate && { timestamp: { gte: new Date(startDate) } }),
-        ...(endDate && { timestamp: { lte: new Date(endDate) } }),
+        timestamp: {
+          ...(startDate && { gte: new Date(startDate) }),
+          ...(endDate && { lte: new Date(endDate) }),
+        },
         AND: formattedFilters,
       },
     });

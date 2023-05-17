@@ -8,16 +8,33 @@ datasource db {
 }
 
 model events {
-  id                   Int       @id @default(autoincrement())
-  event_id             String    @db.Uuid
+  id                   Int         @id @default(autoincrement())
+  event_id             String      @db.Uuid
   payload              Json?
-  alert_id             String?   @db.Uuid
-  task_instance_id     String?   @db.VarChar(255)
-  visit_id             String?   @db.Uuid
-  caregiver_id         String?   @db.Uuid
-  rejected_event_id    String?   @db.Uuid
-  observation_event_id String?   @db.Uuid
-  timestamp            DateTime? @db.Timestamp(6)
-  event_type           String?   @db.VarChar(50)
-  care_recipient_id    String?   @db.Uuid
+  alert_id             String?     @db.Uuid
+  task_instance_id     String?     @db.VarChar(255)
+  visit_id             String?     @db.Uuid
+  caregiver_id         String?     @db.Uuid
+  rejected_event_id    String?     @db.Uuid
+  observation_event_id String?     @db.Uuid
+  timestamp            DateTime?   @db.Timestamp(6)
+  event_type           String?     @db.VarChar(50)
+  care_recipient_id    String?     @db.Uuid
+  recipients           recipients? @relation(fields: [care_recipient_id], references: [recipient_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_event_care_recipient")
+  caregivers           caregivers? @relation(fields: [caregiver_id], references: [caregiver_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_event_caregiver")
+}
+
+model caregivers {
+  id           Int      @id @default(autoincrement())
+  caregiver_id String?  @unique(map: "caregivers_user_id_key") @db.Uuid
+  first_name   String?  @db.VarChar(50)
+  last_name    String?  @db.VarChar(50)
+  events       events[]
+}
+
+model recipients {
+  id           Int      @id @default(autoincrement())
+  recipient_id String?  @unique(map: "recipients_id_key") @db.Uuid
+  name         String?  @db.VarChar(50)
+  events       events[]
 }

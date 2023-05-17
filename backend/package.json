@@ -24,8 +24,14 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.13.0",
+    "chromadb": "^1.4.2",
+    "d3-dsv": "^2.0.0",
+    "hnswlib-node": "^1.4.2",
+    "langchain": "^0.0.75",
+    "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.16"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
