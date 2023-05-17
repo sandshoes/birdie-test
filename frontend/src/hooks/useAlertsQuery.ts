@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { processUrlFilters } from "../utils/helper";
 
-const useAlertsQuery = () => {
-  return useQuery("alerts", async () => {
+const useAlertsQuery = (filters: any) => {
+  const BASE_URL = "http://localhost:3000/";
+  const url = "event/alert_raised";
+  const processedFilters = processUrlFilters(filters);
+  return useQuery(["alerts", processedFilters], async () => {
     const raisedAlerts = await axios.get(
-      "http://localhost:3000/event/alert_raised",
+      `http://localhost:3000/event/alert_raised${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -14,7 +18,7 @@ const useAlertsQuery = () => {
       }
     );
     const qualifiedAlerts = await axios.get(
-      "http://localhost:3000/event/alert_qualified",
+      `http://localhost:3000/event/alert_qualified${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -31,6 +35,12 @@ const useAlertsQuery = () => {
         );
         return {
           alert: qualifiedAlert ? qualifiedAlert : alert,
+          caregiver:
+            qualifiedAlert && qualifiedAlert.caregivers
+              ? qualifiedAlert.caregivers.first_name +
+                " " +
+                qualifiedAlert.caregivers.last_name
+              : null,
           matched: qualifiedAlert ? true : false,
         };
       });
@@ -39,6 +49,7 @@ const useAlertsQuery = () => {
           new Date(b.alert.timestamp).getTime() -
           new Date(a.alert.timestamp).getTime()
       );
+
       return mergedAlerts;
     }
     return [];

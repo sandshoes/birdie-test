@@ -1,0 +1,33 @@
+.graphic-information-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 45rem;
+    width: 45rem;
+    padding: 1em;
+    height: 30rem;
+    border: black 1px solid;
+    border-radius: 0.5rem;
+    border-style: dashed;
+  }
+  
+  .graphic-information-container p {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .graphic-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 20rem;
+    margin-top: 1em;
+  }
+  
+  .graphic-information__title {
+    margin-bottom: 1em;
+  }
+    

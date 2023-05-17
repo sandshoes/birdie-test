@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { processUrlFilters } from "../utils/helper";
 
-const useEventsQuery = () => {
-  return useQuery("events", async () => {
+const useEventsQuery = (filters: any) => {
+  const processedFilters = processUrlFilters(filters);
+  return useQuery(["events", processedFilters], async () => {
     const events = await axios.get(
-      "http://localhost:3000/event",
+      `http://localhost:3000/event${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",

@@ -13,6 +13,12 @@ const AnswerText = ({
 }) => {
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setText("");
+    setIndex(0);
+  }, [message]);
+
   useEffect(() => {
     if (message && index < message.length) {
       const interval = randomInteger(35, 75);
@@ -26,8 +32,8 @@ const AnswerText = ({
     }
   }, [index, message, onComplete]);
   return (
-    <p>
-      <strong>Answer:</strong> <span>{text}</span>
+    <p className="doc-text">
+      <strong>Doc says:</strong> <span>{text && text}</span>
     </p>
   );
 };

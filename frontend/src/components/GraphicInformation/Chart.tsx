@@ -23,6 +23,7 @@ const Chart = ({
   if (chartData.length === 0) {
     return <div>No data</div>;
   }
+
   return (
     <LineChart
       width={600}

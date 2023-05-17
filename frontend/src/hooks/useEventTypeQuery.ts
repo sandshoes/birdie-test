@@ -1,12 +1,16 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { processUrlFilters } from "../utils/helper";
 
-const useEventTypeQuery = (event_type: any, event_dates: any) => {
+const BASE_URL = "http://localhost:3000/";
+
+const useEventTypeQuery = (eventType: any, filters: any) => {
+  const processedFilters = processUrlFilters(filters);
   return useQuery(
-    ["event_type", event_type, event_dates],
+    ["event_type", eventType, processedFilters],
     async () => {
       const events = await axios.get(
-        `http://localhost:3000/event/${event_type}`,
+        `${BASE_URL}event/${eventType}${processedFilters}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -15,10 +19,13 @@ const useEventTypeQuery = (event_type: any, event_dates: any) => {
           },
         }
       );
+      if (eventType === "check_in") {
+        return [];
+      }
       return events.data;
     },
     {
-      enabled: !!event_type,
+      enabled: !!eventType,
     }
   );
 };
