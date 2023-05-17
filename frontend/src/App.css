@@ -1,6 +1,6 @@
 #root {
   width: 100%;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   margin: 0;
@@ -47,13 +47,4 @@
 
 .graphic-info {
   padding-bottom: 2.5rem;
-}
-
-.login-bar {
-  background-color: #2770c8;
-  height: 4rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

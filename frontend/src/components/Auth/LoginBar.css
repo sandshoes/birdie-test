@@ -1,0 +1,42 @@
+.login-bar {
+    background-color: #2770c8;
+    height: 4rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin: 0 2rem; */
+    color: white;
+    /* justify-content: center; */
+  }
+
+  .login-bar p {
+    /* margin-right: auto; */
+    font-size: 1rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.1rem;
+    margin-right: 1rem;
+  }
+
+  .login-bar button {
+    padding: 0.3rem 0.8rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: #ffe0b8; /* light orange */
+    color: #2770c8;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    margin-right: 2rem;
+  }
+
+  .patient-info {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+  }

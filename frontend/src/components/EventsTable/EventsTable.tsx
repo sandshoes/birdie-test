@@ -11,8 +11,7 @@ const EventsTable = () => {
   };
 
   const events = useEvents(eventType, filters);
-  console.log('yo events', events)
-  
+    
   const handleUpdateTimeframe = (event: any) => {
     event.preventDefault();
     setTimeframe(event.target.value);
