@@ -2,6 +2,7 @@ import { useState } from "react";
 import useAskDocMutation from "../../hooks/useAskDocMutation";
 import AnswerText from "./AnswerText";
 import "./AskDoc.css";
+import { useAuth } from "../../AuthContext";
 
 const AskDoc = () => {
   const [inputValue, setInputValue] = useState(
@@ -9,10 +10,12 @@ const AskDoc = () => {
   );
   const [isAsking, setIsAsking] = useState(false);
   const askDocMutation = useAskDocMutation();
+  const auth = useAuth();
+  const accessToken = auth.session?.access_token;
 
   const handleSubmit = () => {
     setIsAsking(true);
-    askDocMutation.mutate(inputValue);
+    askDocMutation.mutate({inputValue, accessToken});
   };
 
   const handleComplete = () => {

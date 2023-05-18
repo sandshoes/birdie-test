@@ -9,7 +9,6 @@ import LoginBar from "./components/Auth/LoginBar";
 
 const App = () => {
   const auth = useAuth();
-  console.log(auth)
   if (!auth.session) {
     return <AuthComponent />;
   }
