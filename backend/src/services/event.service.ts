@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, PrismaClient, events } from '@prisma/client';
+import { PrismaClient, events } from '@prisma/client';
 import { aggregatorMap, categoricalMood } from 'src/utils/helper';
 
 @Injectable()
