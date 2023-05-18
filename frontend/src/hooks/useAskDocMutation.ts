@@ -5,6 +5,7 @@ import { useAuth } from "../AuthContext";
 const useAskDocMutation = () => {
   const auth = useAuth();
   const accessToken = auth.session?.access_token;
+  console.log("access token", accessToken);
   return useMutation(async (inputValue: string) => {
     const askDoc = await axios.post(
       `${import.meta.env.VITE_API_URL}llm/ask-doc`,
