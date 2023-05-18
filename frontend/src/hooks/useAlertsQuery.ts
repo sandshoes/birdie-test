@@ -12,7 +12,6 @@ const useAlertsQuery = (filters: any) => {
       `${import.meta.env.VITE_API_URL}event/alert_raised${processedFilters}`,
       {
         headers: {
-          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
@@ -22,7 +21,6 @@ const useAlertsQuery = (filters: any) => {
       `${import.meta.env.VITE_API_URL}event/alert_qualified${processedFilters}`,
       {
         headers: {
-          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },

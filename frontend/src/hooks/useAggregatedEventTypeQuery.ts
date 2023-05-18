@@ -12,7 +12,6 @@ const useAggregatedEventTypeQuery = (eventType: string, eventDates: any) => {
         `${import.meta.env.VITE_API_URL}event/aggregated/${eventType}`,
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },

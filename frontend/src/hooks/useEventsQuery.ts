@@ -12,7 +12,6 @@ const useEventsQuery = (filters: any) => {
       `${import.meta.env.VITE_API_URL}event${processedFilters}`,
       {
         headers: {
-          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },

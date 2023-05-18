@@ -18,7 +18,6 @@ const useAskDocMutation = () => {
         `${import.meta.env.VITE_API_URL}llm/ask-doc`,
         {
           headers: {
-            "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             "x-api-key": "123456789",
             Authorization: `Bearer ${accessToken}`,
