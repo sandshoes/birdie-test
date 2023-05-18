@@ -9,7 +9,7 @@ const useEventsQuery = (filters: any) => {
   const processedFilters = processUrlFilters(filters);
   return useQuery(["events", processedFilters], async () => {
     const events = await axios.get(
-      `http://localhost:3000/event${processedFilters}`,
+      `${import.meta.env.VITE_API_URL}event${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",

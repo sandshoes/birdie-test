@@ -9,7 +9,7 @@ const useAggregatedEventTypeQuery = (eventType: string, eventDates: any) => {
     ["event_type", eventType, eventDates],
     async () => {
       const events = await axios.get(
-        `http://localhost:3000/event/aggregated/${eventType}`,
+        `${import.meta.env.VITE_API_URL}event/aggregated/${eventType}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",

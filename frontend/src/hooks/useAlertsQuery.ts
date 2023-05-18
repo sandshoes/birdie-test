@@ -4,14 +4,12 @@ import { processUrlFilters } from "../utils/helper";
 import { useAuth } from "../AuthContext";
 
 const useAlertsQuery = (filters: any) => {
-  const BASE_URL = "http://localhost:3000/";
-  const url = "event/alert_raised";
   const auth = useAuth();
   const accessToken = auth.session?.access_token;
   const processedFilters = processUrlFilters(filters);
   return useQuery(["alerts", processedFilters], async () => {
     const raisedAlerts = await axios.get(
-      `http://localhost:3000/event/alert_raised${processedFilters}`,
+      `${import.meta.env.VITE_API_URL}event/alert_raised${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -21,7 +19,7 @@ const useAlertsQuery = (filters: any) => {
       }
     );
     const qualifiedAlerts = await axios.get(
-      `http://localhost:3000/event/alert_qualified${processedFilters}`,
+      `${import.meta.env.VITE_API_URL}event/alert_qualified${processedFilters}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",

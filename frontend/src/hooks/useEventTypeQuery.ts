@@ -3,8 +3,6 @@ import { useQuery } from "react-query";
 import { processUrlFilters } from "../utils/helper";
 import { useAuth } from "../AuthContext";
 
-const BASE_URL = "http://localhost:3000/";
-
 const useEventTypeQuery = (eventType: any, filters: any) => {
   const auth = useAuth();
   const accessToken = auth.session?.access_token;
@@ -13,7 +11,7 @@ const useEventTypeQuery = (eventType: any, filters: any) => {
     ["event_type", eventType, processedFilters],
     async () => {
       const events = await axios.get(
-        `${BASE_URL}event/${eventType}${processedFilters}`,
+        `${import.meta.env.VITE_API_URL}event/${eventType}${processedFilters}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -22,9 +20,6 @@ const useEventTypeQuery = (eventType: any, filters: any) => {
           },
         }
       );
-      if (eventType === "check_in") {
-        return [];
-      }
       return events.data;
     },
     {

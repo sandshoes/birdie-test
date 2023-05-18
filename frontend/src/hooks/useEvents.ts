@@ -1,7 +1,10 @@
 import useEventsQuery from "./useEventsQuery";
 import useEventTypeQuery from "./useEventTypeQuery";
 
-const useEvents = (eventType: any, filters: any) => {
+const useEvents = (
+  eventType: string,
+  filters: Record<string, string | number>
+) => {
   if (eventType === "all") {
     return useEventsQuery(filters);
   }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { eventMapper, formatTimestamp } from "../../utils/helper";
 import "./EventsTable.css";
 import useEvents from "../../hooks/useEvents";
+import { Event } from "../../types";
 
 const EventsTable = () => {
   const [timeframe, setTimeframe] = useState("7d");
@@ -11,15 +12,35 @@ const EventsTable = () => {
   };
 
   const events = useEvents(eventType, filters);
-    
-  const handleUpdateTimeframe = (event: any) => {
+
+  const handleUpdateTimeframe = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     event.preventDefault();
     setTimeframe(event.target.value);
   };
 
-  const handleUpdateEventType = (event: any) => {
+  const handleUpdateEventType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     event.preventDefault();
     setEventType(event.target.value);
+  };
+
+  const tooltipExplanation = (event: Event) => {
+    const explanation: any = {};
+    if (event.caregivers) {
+      explanation.caregiver =
+        event.caregivers.first_name + " " + event.caregivers.last_name;
+    }
+    if (event.payload.note) {
+      explanation.note = event.payload.note;
+    }
+    if (event.payload.task_definition_description) {
+      explanation.task_definition_description =
+        event.payload.task_definition_description;
+    }
+    return explanation;
   };
 
   return (
@@ -48,14 +69,25 @@ const EventsTable = () => {
           <thead>
             <tr>
               <th>Event Type</th>
-              <th>Time</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody>
             {events.isSuccess &&
-              events.data.map((event: any) => (
+              events.data.map((event: Event) => (
                 <tr key={event.id}>
-                  <td>{eventMapper[event.event_type]}</td>
+                  <td>
+                    <div style={{ position: "relative" }}>
+                      {eventMapper[event.event_type]}
+                      <span className="tooltip-text">
+                        {JSON.stringify(
+                          tooltipExplanation(event),
+                          null,
+                          2
+                        ).slice(1, -1)}
+                      </span>
+                    </div>
+                  </td>
                   <td>{formatTimestamp(event.timestamp)}</td>
                 </tr>
               ))}

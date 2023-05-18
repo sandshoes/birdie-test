@@ -30,11 +30,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [careRecipientData, setCareRecipientData] = useState<any | null>("");
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { savedSession } }) => {
+    supabase.auth.getSession().then(({ data: { savedSession } }: any) => {
       setSession(savedSession);
     });
 
-    supabase.auth.getUser().then(({ data: { savedUser } }) => {
+    supabase.auth.getUser().then(({ data: { savedUser } }: any) => {
       setUser(savedUser);
     });
 
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchCareRecipientInfo = async (careRecipientId: string) => {
     const response = await fetch(
-      `http://localhost:3000/recipient/${careRecipientId}`,
+      `${import.meta.env.VITE_API_URL}recipient/${careRecipientId}`,
       {
         headers: {
           Authorization: `Bearer ${session?.access_token}`,
