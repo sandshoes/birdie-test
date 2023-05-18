@@ -8,7 +8,7 @@ export class LLMController {
 
   @Post('/ask-doc')
   async getLLMQuery(@Req() req: AuthRequest, @Body() body: any) {
-    const query: string = body.body?.query || body.query;
+    const query: string = body.query;
     return this.llmService.getLLMQuery(
       `Regarding care_recipient_id ${req.careRecipientId},` + query,
     );

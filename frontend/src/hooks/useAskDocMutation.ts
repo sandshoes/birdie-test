@@ -17,13 +17,12 @@ const useAskDocMutation = () => {
       const askDoc = await axios.post(
         `${import.meta.env.VITE_API_URL}llm/ask-doc`,
         {
+          query: inputValue,
+        },
+        {
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": "123456789",
             Authorization: `Bearer ${accessToken}`,
-          },
-          body: {
-            query: inputValue,
           },
         }
       );

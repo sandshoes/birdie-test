@@ -6,6 +6,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
 
   app.enableCors({
+    origin: ['https://birdie-test-taupe.vercel.app', 'http://localhost:5173'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
