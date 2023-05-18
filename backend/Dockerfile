@@ -12,9 +12,9 @@ RUN npm install
 
 COPY . ./
 
-RUN npx prisma validate
-
 RUN npx prisma generate
+
+RUN npx prisma validate
 
 RUN npm run build
 
