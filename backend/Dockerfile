@@ -6,11 +6,15 @@ WORKDIR /usr/src/backend
 
 COPY package.json ./
 
+COPY prisma ./prisma/
+
 RUN npm install
 
-RUN npx prisma generate
-
 COPY . ./
+
+RUN npx prisma validate
+
+RUN npx prisma generate
 
 RUN npm run build
 
