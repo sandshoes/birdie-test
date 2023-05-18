@@ -4,9 +4,11 @@ RUN apk add --no-cache python3 make g++
 
 WORKDIR /usr/src/backend
 
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm install
+
+RUN npx prisma generate
 
 COPY . ./
 
